@@ -1,63 +1,78 @@
-# README Generator
+# README.md Generator
 
 ## Description
-
-This Python application generates a README.md file for a given codebase using the Anthropic API. It analyzes the provided code and creates a detailed document explaining the application's functionality and providing instructions for users to run it.
+This application generates a `README.md` file for a given codebase. It uses various AI models to analyze the code and produce a detailed and structured README file. The application supports models from Anthropic, OpenAI, and Groq.
 
 ## Features
-
-- Analyzes a given codebase
-- Generates a structured README.md file
-- Uses Anthropic's API for content generation
-- Supports command-line arguments for input file specification
-- Creates the README.md file in the same directory as the input file
+- **AI Model Integration**: Supports Claude (Anthropic), GPT-4o (OpenAI), and LLaMA (Groq) models for generating README content.
+- **Automated README Generation**: Automatically extracts and formats information from the codebase to create a comprehensive README file.
+- **Environment Configuration**: Uses environment variables for API keys.
+- **Command-Line Interface**: Provides a CLI for easy usage.
 
 ## Installation
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/ryanklapperhakkoda/documentation_assistant.git
+    cd documentation_assistant
+    ```
 
-1. Clone the repository:
-   ```
-   git clone claude_readme_generator
-   ```
+2. **Create and activate a virtual environment**:
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    ```
 
-2. Navigate to the project directory:
-   ```
-   cd claude_readme_generator
-   ```
+3. **Install the required dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-3. Install the required dependencies:
-   ```
-   pip install anthropic python-dotenv
-   ```
-
-4. Set up your Anthropic API key:
-   - Create a `.env` file in the project root
-   - Add your Anthropic API key to the `.env` file:
-     ```
-     ANTHROPIC_API_KEY=your_api_key_here
-     ```
+4. **Set up environment variables**:
+    Create a `.env` file in the root directory and add your API keys:
+    ```env
+    ANTHROPIC_API_KEY=your_anthropic_api_key
+    OPENAI_API_KEY=your_openai_api_key
+    GROQ_API_KEY=your_groq_api_key
+    ```
 
 ## Usage
-
-Run the script from the command line, providing the path to the file containing the codebase:
-
+To generate a `README.md` file for a given codebase, run the following command:
+```bash
+python generate_readme.py <file_path> --model <model>
 ```
-python main.py /path/to/your/codebase_file.py
-```
+- `<file_path>`: Path to the file containing the codebase.
+- `<model>`: AI model to use for generation (`claude`, `openai`, `llama`). Default is `claude`.
 
-The script will analyze the codebase and generate a README.md file in the same directory as the input file.
+Example:
+```bash
+python generate_readme.py example_codebase.py --model openai
+```
 
 ## Configuration
-
-The application uses environment variables for configuration. Make sure to set up your `.env` file with the following:
-
-- `ANTHROPIC_API_KEY`: Your Anthropic API key
+The application uses environment variables to store API keys. Ensure you have a `.env` file in the root directory with the following keys:
+- `ANTHROPIC_API_KEY`
+- `OPENAI_API_KEY`
+- `GROQ_API_KEY`
 
 ## Dependencies
+- `anthropic`
+- `openai`
+- `groq`
+- `python-dotenv`
+- `argparse`
+- `snowflake-connector-python`
 
-- anthropic: For interacting with the Anthropic API
-- python-dotenv: For loading environment variables from a .env file
-- argparse: For parsing command-line arguments
+Ensure all dependencies are installed by running:
+```bash
+pip install -r requirements.txt
+```
 
-## Note
-
-This README generator is designed to work with the Anthropic API. Make sure you have a valid API key and sufficient credits to use the service.
+## Entry Points
+- **Main Script**: `generate_readme.py`
+- **Functions**:
+  - `create_readme_file(content, directory)`: Creates the `README.md` file.
+  - `read_file_content(file_path)`: Reads the content of the provided file.
+  - `generate_readme_claude(client, user_prompt)`: Generates README using Claude model.
+  - `generate_readme_openai(client, user_prompt)`: Generates README using OpenAI model.
+  - `generate_readme_llama(client, user_prompt)`: Generates README using LLaMA model.
+  - `main(file_path, model)`: Main function to handle the process.
